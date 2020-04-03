@@ -6,6 +6,10 @@ import store from './store'
 import axios from 'axios'
 Vue.prototype.$axios = axios;
 
+Vue.filter('setWH', (url, arg) => {
+  return url.replace(/w\.h/, arg);
+});
+
 Vue.config.productionTip = false
 
 new Vue({
