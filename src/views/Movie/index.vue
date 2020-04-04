@@ -19,7 +19,8 @@
             </keep-alive>
         </div>
         <TabBar></TabBar>
-        <!-- <MessageBox></MessageBox> -->
+        <!-- 多个路由可以使用命名视图处理，添加name，实现添加多个router-view -->
+        <router-view name="detail"></router-view>
     </div>
 </template>
 

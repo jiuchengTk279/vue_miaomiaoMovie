@@ -40,6 +40,32 @@ const routes = [
         component: () => import('../components/NowPlaying/index.vue')
       },
       {
+        path: 'detail/1/:movieId',
+        name: 'Detail',
+        // 命名视图
+        components: {
+          default: () => import('../components/NowPlaying/index.vue'),
+          detail: () => import('../views/Movie/detail.vue')
+        },
+        // 多视图
+        props: {
+          detail: true
+        }
+      },
+      {
+        path: 'detail/2/:movieId',
+        name: 'Detail',
+        // 命名视图
+        components: {
+          default: () => import('../components/CommingSoon/index.vue'),
+          detail: () => import('../views/Movie/detail.vue')
+        },
+        // 多视图
+        props: {
+          detail: true
+        }
+      },
+      {
         path: '/movie',
         redirect: '/movie/nowPlaying'
       }
