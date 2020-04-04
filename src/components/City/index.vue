@@ -1,20 +1,24 @@
 <template>
     <div class="city_body">
         <div class="city_list">
-            <div class="city_hot">
-                <h2>热门城市</h2>
-                <ul class="clearfix">
-                    <li v-for="item in hotList" :key="item.id">{{ item.nm }}</li>
-                </ul>
-            </div>
-            <div class="city_sort" ref="citySort">
-                <div v-for="item in cityList" :key="item.index">
-                    <h2>{{ item.index }}</h2>
-                    <ul>
-                        <li v-for="itemList in item.list" :key="itemList.id">{{ itemList.nm }}</li>
-                    </ul>
+            <Scroll ref="cityList">
+                <div>
+                    <div class="city_hot">
+                        <h2>热门城市</h2>
+                        <ul class="clearfix">
+                            <li v-for="item in hotList" :key="item.id">{{ item.nm }}</li>
+                        </ul>
+                    </div>
+                    <div class="city_sort" ref="citySort">
+                        <div v-for="item in cityList" :key="item.index">
+                            <h2>{{ item.index }}</h2>
+                            <ul>
+                                <li v-for="itemList in item.list" :key="itemList.id">{{ itemList.nm }}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </Scroll>
         </div>
         <div class="city_index">
             <ul>
@@ -101,7 +105,8 @@ export default {
         // 点击右侧索引跳转到对应的城市索引及城市列表
         handleToIndex(index) {
             var h2 = this.$refs.citySort.getElementsByTagName('h2')
-            this.$refs.citySort.parentNode.scrollTop = h2[index].offsetTop;
+            // this.$refs.citySort.parentNode.scrollTop = h2[index].offsetTop;
+            this.$refs.cityList.handleToScrollTop(-h2[index].offsetTop);
         }
     }
 }
