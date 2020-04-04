@@ -1,6 +1,7 @@
 <template>
     <div class="movie_body">
-        <Scroll>
+        <Loading v-if="isLoading"></Loading>
+        <Scroll v-else>
             <ul>
                 <li v-for="item in comingList" :key="item.id">
                     <div class="pic_show"><img :src="item.img | setWH('128.180')"></div>
@@ -24,13 +25,15 @@ export default {
     name: 'ComingSoon',
     data() {
         return {
-            comingList: []
+            comingList: [],
+            isLoading: true
         }
     },
     mounted () {
         this.$axios.get('/api/movieComingList?cityId=10').then((res) => {
             if (res.data.msg === 'ok') {
                 this.comingList = res.data.data.comingList;
+                this.isLoading = false
             }
         })
     }

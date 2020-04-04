@@ -1,7 +1,8 @@
 <template>
     <div class="city_body">
         <div class="city_list">
-            <Scroll ref="cityList">
+            <Loading v-if="isLoading"></Loading>
+            <Scroll v-else ref="cityList">
                 <div>
                     <div class="city_hot">
                         <h2>热门城市</h2>
@@ -34,7 +35,8 @@ export default {
     data () {
         return {
             cityList: [],
-            hotList: []
+            hotList: [],
+            isLoading: true
         }
     },
     mounted() {
@@ -43,6 +45,7 @@ export default {
             // 获取城市列表数据成功
             if (msg === 'ok') {
                 var cities = res.data.data.cities;
+                this.isLoading = false;
                 // [ {index: 'A', list: [{nm: '阿明', id: 123}]}]
                 var {cityList, hotList} = this.formatCityList(cities);
                 this.cityList = cityList;

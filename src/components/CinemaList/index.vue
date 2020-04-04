@@ -1,6 +1,7 @@
 <template>
     <div class="cinema_body">
-        <Scroll>
+        <Loading v-if="isLoading"></Loading>
+        <Scroll v-else>
             <ul>
                 <li v-for="item in cinemas" :key="item.id">
                     <div>
@@ -25,13 +26,15 @@ export default {
     name: 'CinemaList',
     data() {
         return {
-            cinemas: []
+            cinemas: [],
+            isLoading: true
         }
     },
     mounted () {
         this.$axios.get('/api/cinemaList?cityId=10').then((res) => {
             if (res.data.msg === 'ok') {
                 this.cinemas = res.data.data.cinemas
+                this.isLoading = false
                 console.log(this.cinemas)
             }
         })

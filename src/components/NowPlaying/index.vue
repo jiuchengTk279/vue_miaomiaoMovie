@@ -1,6 +1,7 @@
 <template>
     <div class="movie_body" ref="movieBody">
-        <Scroll :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
+        <Loading v-if="isLoading"></Loading>
+        <Scroll v-else :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
             <ul>
                 <li class="pullDown"  v-show="pullDownMsg !== ''">{{ pullDownMsg }}</li>
                 <li v-for="item in movieList" :key="item.id">
@@ -27,13 +28,15 @@ export default {
     data() {
         return {
             movieList: [],
-            pullDownMsg: ''
+            pullDownMsg: '',
+            isLoading: true
         }
     },
     mounted() {
         this.$axios.get('/api/movieOnInfoList?cityId=10').then((res) => {
             if (res.data.msg === 'ok') {
                 this.movieList = res.data.data.movieList;
+                this.isLoading = false;
                 // 在数据获取和界面渲染完后，获取立即更新后的界面 this.$nextTick()
                 // this.$nextTick(() => {
                 //     var scroll = new BScroll(this.$refs.movieBody, {
