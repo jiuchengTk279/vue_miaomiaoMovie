@@ -26,14 +26,19 @@ export default {
     data() {
         return {
             comingList: [],
-            isLoading: true
+            isLoading: true,
+            prevCityId: -1
         }
     },
-    mounted () {
-        this.$axios.get('/api/movieComingList?cityId=10').then((res) => {
+    activated () {
+        var cityId = this.$store.state.city.id;
+        if (this.prevCityId === cityId) {return ;}
+        this.isLoading = false
+        this.$axios.get('/api/movieComingList?cityId='+cityId).then((res) => {
             if (res.data.msg === 'ok') {
                 this.comingList = res.data.data.comingList;
                 this.isLoading = false
+                this.prevCityId = cityId
             }
         })
     }

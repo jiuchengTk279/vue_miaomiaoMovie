@@ -27,15 +27,20 @@ export default {
     data() {
         return {
             cinemas: [],
-            isLoading: true
+            isLoading: true,
+            prevCityId: -1
         }
     },
-    mounted () {
-        this.$axios.get('/api/cinemaList?cityId=10').then((res) => {
+    activated () {
+        var cityId = this.$store.state.city.id;
+        if (this.prevCityId === cityId ) {return ;}
+        this.isLoading = true
+        this.$axios.get('/api/cinemaList?cityId='+cityId).then((res) => {
             if (res.data.msg === 'ok') {
                 this.cinemas = res.data.data.cinemas
                 this.isLoading = false
-                console.log(this.cinemas)
+                this.prevCityId = cityId
+                // console.log(this.cinemas)
             }
         })
     },

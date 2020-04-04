@@ -29,14 +29,19 @@ export default {
         return {
             movieList: [],
             pullDownMsg: '',
-            isLoading: true
+            isLoading: true,
+            prevCityId: -1
         }
     },
-    mounted() {
-        this.$axios.get('/api/movieOnInfoList?cityId=10').then((res) => {
+    activated() {
+        var cityId = this.$store.state.city.id;
+        if (this.prevCityId === cityId) {return ;}
+        this.isLoading = false
+        this.$axios.get('/api/movieOnInfoList?cityId='+cityId).then((res) => {
             if (res.data.msg === 'ok') {
                 this.movieList = res.data.data.movieList;
                 this.isLoading = false;
+                this.prevCityId = cityId;
                 // 在数据获取和界面渲染完后，获取立即更新后的界面 this.$nextTick()
                 // this.$nextTick(() => {
                 //     var scroll = new BScroll(this.$refs.movieBody, {
